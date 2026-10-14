@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <windows.h>
+#include <sstream>
 
 std::string convertToRoman(int number) {
 	const int values[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
@@ -47,48 +48,64 @@ bool isValidRoman(const std::string& roman) {
 }
 
 
+
 int main() {
-	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
 
-	int choice;
+    std::string input;
+    int choice;
 
-	std::cout << "Оберіть напрямок перетворення:\n";
-	std::cout << "1. Арабське число в римське\n";
-	std::cout << "2. Римське число в арабське\n";
-	std::cout << "\nВаш вибір: ";
-	std::cin >> choice;
+    std::cout << "Оберіть напрямок перетворення:\n";
+    std::cout << "1. Арабське число в римське\n";
+    std::cout << "2. Римське число в арабське\n";
+    std::cout << "\nВаш вибір: ";
 
-	if (choice == 1) {
-		int number;
+    std::getline(std::cin, input);
+    std::istringstream menuStream(input);
+    char extra;
 
-		std::cout << "Введіть арабське число: ";
-		std::cin >> number;
+    if (!(menuStream >> choice) || (menuStream >> extra) ||
+        (choice != 1 && choice != 2)) {
+        std::cout << "Помилка: оберіть пункт 1 або 2.\n";
+        return 1;
+    }
 
-		if (number < 1 || number > 3999) {
-			std::cout << "Помилка: число має бути від 1 до 3999.\n";
-			return 1;
-		}
+    if (choice == 1) {
+        int number;
 
-		std::cout << "Римське число: "
-			<< convertToRoman(number) << '\n';
-	}
+        std::cout << "Введіть арабське число: ";
+        std::getline(std::cin, input);
 
-	else if (choice == 2) {
-		std::string roman;
+        std::istringstream numberStream(input);
 
-		std::cout << "Введіть римське число: ";
-		std::cin >> roman;
+        if (!(numberStream >> number) || (numberStream >> extra)) {
+            std::cout << "Помилка: введіть ціле число.\n";
+            return 1;
+        }
 
-		if (!isValidRoman(roman)) {
-			std::cout << "Помилка: некоректний римський запис.\n";
-			return 1;
-		}
+        if (number < 1 || number > 3999) {
+            std::cout << "Помилка: число має бути від 1 до 3999.\n";
+            return 1;
+        }
 
-		std::cout << "Арабське число: "
-			<< convertToArabic(roman) << '\n';
-	}
+        std::cout << "Римське число: "
+            << convertToRoman(number) << '\n';
+    }
+    else {
+        std::string roman;
 
+        std::cout << "Введіть римське число: ";
+        std::getline(std::cin, roman);
+
+        if (!isValidRoman(roman)) {
+            std::cout << "Помилка: некоректний римський запис.\n";
+            return 1;
+        }
+
+        std::cout << "Арабське число: "
+            << convertToArabic(roman) << '\n';
+    }
 
     return 0;
 }
