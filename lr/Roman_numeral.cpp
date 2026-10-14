@@ -57,6 +57,11 @@ int main() {
 		std::cout << "Введіть арабське число: ";
 		std::cin >> number;
 
+		if (number < 1 || number > 3999) {
+			std::cout << "Помилка: число має бути від 1 до 3999.\n";
+			return 1;
+		}
+
 		std::cout << "Римське число: "
 			<< convertToRoman(number) << '\n';
 	}
