@@ -39,6 +39,14 @@ int convertToArabic(const std::string& roman) {
 	return result;
 }
 
+bool isValidRoman(const std::string& roman) {
+	int number = convertToArabic(roman);
+
+	return number >= 1 && number <= 3999
+		&& convertToRoman(number) == roman;
+}
+
+
 int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
@@ -65,15 +73,22 @@ int main() {
 		std::cout << "Римське число: "
 			<< convertToRoman(number) << '\n';
 	}
+
 	else if (choice == 2) {
 		std::string roman;
 
 		std::cout << "Введіть римське число: ";
 		std::cin >> roman;
 
+		if (!isValidRoman(roman)) {
+			std::cout << "Помилка: некоректний римський запис.\n";
+			return 1;
+		}
+
 		std::cout << "Арабське число: "
 			<< convertToArabic(roman) << '\n';
 	}
+
 
     return 0;
 }
