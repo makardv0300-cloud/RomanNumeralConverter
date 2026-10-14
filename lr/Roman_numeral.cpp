@@ -43,18 +43,32 @@ int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	int number;
-	std::string roman;
+	int choice;
 
-	std::cout << "¬вед≥ть арабське число: ";
-	std::cin >> number;
+	std::cout << "ќбер≥ть напр€мок перетворенн€:\n";
+	std::cout << "1. јрабське число в римське\n";
+	std::cout << "2. –имське число в арабське\n";
+	std::cout << "\n¬аш виб≥р: ";
+	std::cin >> choice;
 
-	std::cout << "–имське число: " << convertToRoman(number) << std::endl;
+	if (choice == 1) {
+		int number;
 
-	std::cout << "\n¬вед≥ть римське число: ";
-	std::cin >> roman;
+		std::cout << "¬вед≥ть арабське число: ";
+		std::cin >> number;
 
-	std::cout << "јрабське число: " << convertToArabic(roman) << std::endl;
+		std::cout << "–имське число: "
+			<< convertToRoman(number) << '\n';
+	}
+	else if (choice == 2) {
+		std::string roman;
+
+		std::cout << "¬вед≥ть римське число: ";
+		std::cin >> roman;
+
+		std::cout << "јрабське число: "
+			<< convertToArabic(roman) << '\n';
+	}
 
     return 0;
 }
