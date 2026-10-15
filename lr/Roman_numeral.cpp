@@ -2,6 +2,7 @@
 #include <string>
 #include <windows.h>
 #include <sstream>
+#include <cctype>
 
 std::string convertToRoman(int number) {
 	const int values[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
@@ -21,12 +22,20 @@ std::string convertToRoman(int number) {
 int convertToArabic(const std::string& roman) {
 	const int values[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
 	const std::string symbols[] = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
-	int result = 0;
+	
+	std::string upperRoman = roman;
+	for (char& c : upperRoman) {
+		c = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
+	}
+    
+    int result = 0;
 	size_t i = 0;
-	while (i < roman.length()) {
+	
+    while (i < upperRoman.length()) {
 		bool matched = false;
+
 		for (int j = 0; j < 13; ++j) {
-			if (roman.substr(i, symbols[j].length()) == symbols[j]) {
+			if (upperRoman.substr(i, symbols[j].length()) == symbols[j]) {
 				result += values[j];
 				i += symbols[j].length();
 				matched = true;
@@ -43,8 +52,16 @@ int convertToArabic(const std::string& roman) {
 bool isValidRoman(const std::string& roman) {
 	int number = convertToArabic(roman);
 
-	return number >= 1 && number <= 3999
-		&& convertToRoman(number) == roman;
+    if (number < 1 || number > 3999) {
+        return false;
+    }
+
+	std::string upperRoman = roman;
+	for (char& c : upperRoman) {
+		c = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
+	}
+
+	return convertToRoman(number) == upperRoman;
 }
 
 
