@@ -21,7 +21,12 @@ std::string convertToRoman(int number) {
 int convertToArabic(const std::string& roman) {
 	const int values[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
 	const std::string symbols[] = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
-	int result = 0;
+	
+    if (roman.empty()) {
+        return -1;
+    }
+
+    int result = 0;
 	size_t i = 0;
 	while (i < roman.length()) {
 		bool matched = false;
@@ -37,6 +42,12 @@ int convertToArabic(const std::string& roman) {
 			return -1; 
 		}
 	}
+
+    if (result < 1 || result > 3999) {
+		convertToRoman(result) != roman;
+        return -1;
+    }
+
 	return result;
 }
 
