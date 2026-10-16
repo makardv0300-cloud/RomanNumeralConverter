@@ -50,8 +50,8 @@ int convertToArabic(const std::string& roman) {
 		}
 	}
 
-    if (result < 1 || result > 3999) {
-		convertToRoman(result) != roman;
+    if (result < 1 || result > 3999 ||
+        convertToRoman(result) != upperRoman) {
         return -1;
     }
 
